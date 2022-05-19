@@ -5,6 +5,7 @@ import Stats from 'https://unpkg.com/three@0.126.1/examples//jsm/libs/stats.modu
 import { FlyControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/FlyControls.js';
 
 import Planet from './planet.js'
+import OrbitLine from './orbitLine.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1e7 );
@@ -13,7 +14,56 @@ const stats = new Stats();
 const controls = new FlyControls( camera, renderer.domElement );
 const clock = new THREE.Clock();
 
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+// constants
 const EARTH_YEAR = 2 * Math.PI * (1 / 60) * (1 / 60);
+
+const MERCURY_SEMIMAJOR_AXIS = 700
+const VENUS_SEMIMAJOR_AXIS = 1000
+const EARTH_SEMIMAJOR_AXIS = 1100
+const MARS_SEMIMAJOR_AXIS = 1200
+const JUPITER_SEMIMAJOR_AXIS = 1500
+const SATURN_SEMIMAJOR_AXIS = 1700
+const URANUS_SEMIMAJOR_AXIS = 1900
+const NEPTUNE_SEMIMAJOR_AXIS = 2100
+
+const ORBIT_LINE_HALF_WIDTH = 1
+
+function onPointerMove( event ) {
+
+	// calculate pointer position in normalized device coordinates
+	// (-1 to +1) for both components
+
+	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+}
+
+function render() {
+
+	// update the picking ray with the camera and pointer position
+	raycaster.setFromCamera( pointer, camera );
+
+	// calculate objects intersecting the picking ray
+	const intersects = raycaster.intersectObjects( scene.children, true);
+
+    console.log(intersects);
+
+	for ( let i = 0; i < intersects.length; i ++ ) {
+
+		//intersects[ i ].object.material.color.set( 0xff0000 );
+        console.log('AAAAAAAA');
+        console.log(intersects[i]);
+        console.log('NAME:');
+        console.log(intersects[i].object.name);
+
+	}
+
+	renderer.render( scene, camera );
+
+}
 
 function addStars() {
     const radius = 100;
@@ -77,26 +127,48 @@ function addStars() {
 
 
 function main() {
-
-    
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
     document.body.appendChild( stats.dom);
 
-    // const loader = new THREE.TextureLoader();
+    // add orbital lines
+    const orbitalLines = new THREE.Group();
 
+    const mercuryLine = new OrbitLine(MERCURY_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, MERCURY_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+    const venusLine = new OrbitLine(VENUS_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, VENUS_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+    const earthLine = new OrbitLine(EARTH_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, EARTH_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+    const marsLine = new OrbitLine(MARS_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, MARS_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+    const jupiterLine = new OrbitLine(JUPITER_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, JUPITER_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+    const saturnLine = new OrbitLine(SATURN_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, SATURN_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+    const uranusLine = new OrbitLine(URANUS_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, URANUS_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+    const neptuneLine = new OrbitLine(NEPTUNE_SEMIMAJOR_AXIS - ORBIT_LINE_HALF_WIDTH, NEPTUNE_SEMIMAJOR_AXIS + ORBIT_LINE_HALF_WIDTH, 64);
+
+    orbitalLines.add(
+        mercuryLine.getMesh(),
+        venusLine.getMesh(),
+        earthLine.getMesh(),
+        marsLine.getMesh(),
+        jupiterLine.getMesh(),
+        saturnLine.getMesh(),
+        uranusLine.getMesh(),
+        neptuneLine.getMesh(),
+    );
+
+    scene.add(orbitalLines);
+
+    // add planets
     const solarSystem = new THREE.Group();
 
-    const sun = new Planet(500, 32, 16, '/resources/sun.jpg', 0);
-    const mercury = new Planet(4, 32, 16, '/resources/mercury.png', 700)
-    const venus = new Planet(12, 32, 16, '/resources/venus.jpg', 1000);
-    const earth = new Planet(12, 32, 16, '/resources/earth.jpeg', 1100);
-    const mars = new Planet(4, 32, 16, '/resources/mars.webp', 1200);
-    const jupiter = new Planet(100, 32, 16, '/resources/jupiter.jpg', 1500);
-    const saturn = new Planet(90, 32, 16, '/resources/saturn.jpg', 1700);
-    const uranus = new Planet(80, 32, 16, '/resources/uranus.jpg', 1900);
-    const neptune = new Planet(80, 32, 16, '/resources/neptune.jpg', 2100);
+    const sun = new Planet(500, 32, 16, '/resources/sun.jpg', 0, 'sun');
+    const mercury = new Planet(4, 32, 16, '/resources/mercury.png', MERCURY_SEMIMAJOR_AXIS, 'mercury')
+    const venus = new Planet(12, 32, 16, '/resources/venus.jpg', VENUS_SEMIMAJOR_AXIS, 'venus');
+    const earth = new Planet(12, 32, 16, '/resources/earth.jpeg', EARTH_SEMIMAJOR_AXIS, 'earth');
+    const mars = new Planet(4, 32, 16, '/resources/mars.webp', MARS_SEMIMAJOR_AXIS, 'mars');
+    const jupiter = new Planet(100, 32, 16, '/resources/jupiter.jpg', JUPITER_SEMIMAJOR_AXIS, 'jupiter');
+    const saturn = new Planet(90, 32, 16, '/resources/saturn.jpg', SATURN_SEMIMAJOR_AXIS, 'saturn');
+    const uranus = new Planet(80, 32, 16, '/resources/uranus.jpg', URANUS_SEMIMAJOR_AXIS, 'uranus');
+    const neptune = new Planet(80, 32, 16, '/resources/neptune.jpg', NEPTUNE_SEMIMAJOR_AXIS, 'neptune');
 
     const sunMesh = sun.getMesh();
     const mercuryMesh = mercury.getMesh();
@@ -141,13 +213,13 @@ function main() {
 
     addStars()
 
-    camera.position.z = 700;
+    camera.position.z = 1500;
 
     controls.movementSpeed = 1000;
     controls.domElement = renderer.domElement;
     controls.rollSpeed = Math.PI / 8;
     controls.autoForward = false;
-    controls.dragToLook = false;
+    controls.dragToLook = true;
 
     function animate() {
         sunMesh.rotation.y += 0.001;
@@ -162,10 +234,12 @@ function main() {
         requestAnimationFrame( animate );
         controls.update(clock.getDelta());
         stats.update();
-        renderer.render( scene, camera );
+        render();
     }
 
     animate();
 }
+
+window.addEventListener( 'pointermove', onPointerMove );
 
 main();
