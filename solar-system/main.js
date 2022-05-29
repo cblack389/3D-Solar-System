@@ -312,38 +312,38 @@ function main() {
     const solarSystem = new THREE.Group();
     scene.add(solarSystem);
 
-    const sun = new Planet(SUN_RADIUS, 32, 16, '/resources/sun.jpg', 0, 'sun');
-    const mercury = new Planet(MERCURY_RADIUS, 32, 16, '/resources/mercury.jpg', MERCURY_SEMIMAJOR_AXIS, 'mercury')
-    const venus = new Planet(VENUS_RADIUS, 32, 16, '/resources/venus.jpg', VENUS_SEMIMAJOR_AXIS, 'venus');
-    const earth = new Planet(EARTH_RADIUS, 32, 16, '/resources/earth.jpeg', EARTH_SEMIMAJOR_AXIS, 'earth');
-    const mars = new Planet(MARS_RADIUS, 32, 16, '/resources/mars.webp', MARS_SEMIMAJOR_AXIS, 'mars');
-    const jupiter = new Planet(JUPITER_RADIUS, 32, 16, '/resources/jupiter.jpg', JUPITER_SEMIMAJOR_AXIS, 'jupiter');
-    const saturn = new Planet(SATURN_RADIUS, 32, 16, '/resources/saturn.jpg', SATURN_SEMIMAJOR_AXIS, 'saturn');
-    const uranus = new Planet(URANUS_RADIUS, 32, 16, '/resources/uranus.jpg', URANUS_SEMIMAJOR_AXIS, 'uranus');
-    const neptune = new Planet(NEPTUNE_RADIUS, 32, 16, '/resources/neptune.jpg', NEPTUNE_SEMIMAJOR_AXIS, 'neptune');
+    const sun = new Planet(SUN_RADIUS, 32, 16, 'resources/sun.jpg', 0, 'sun');
+    const mercury = new Planet(MERCURY_RADIUS, 32, 16, 'resources/mercury.jpg', MERCURY_SEMIMAJOR_AXIS, 'mercury')
+    const venus = new Planet(VENUS_RADIUS, 32, 16, 'resources/venus.jpg', VENUS_SEMIMAJOR_AXIS, 'venus');
+    const earth = new Planet(EARTH_RADIUS, 32, 16, 'resources/earth.jpeg', EARTH_SEMIMAJOR_AXIS, 'earth');
+    const mars = new Planet(MARS_RADIUS, 32, 16, 'resources/mars.webp', MARS_SEMIMAJOR_AXIS, 'mars');
+    const jupiter = new Planet(JUPITER_RADIUS, 32, 16, 'resources/jupiter.jpg', JUPITER_SEMIMAJOR_AXIS, 'jupiter');
+    const saturn = new Planet(SATURN_RADIUS, 32, 16, 'resources/saturn.jpg', SATURN_SEMIMAJOR_AXIS, 'saturn');
+    const uranus = new Planet(URANUS_RADIUS, 32, 16, 'resources/uranus.jpg', URANUS_SEMIMAJOR_AXIS, 'uranus');
+    const neptune = new Planet(NEPTUNE_RADIUS, 32, 16, 'resources/neptune.jpg', NEPTUNE_SEMIMAJOR_AXIS, 'neptune');
     
     // add moons
-    const moon = new Planet(4, 32, 16, '/resources/moon.jpg', 30, 'moon');
+    const moon = new Planet(4, 32, 16, 'resources/moon.jpg', 30, 'moon');
     const moonMesh = moon.getMesh();
     const moonGroup = new THREE.Group();
 
-    const io = new Planet(10, 32, 16, '/resources/io.webp', 120, 'io');
+    const io = new Planet(10, 32, 16, 'resources/io.webp', 120, 'io');
     const ioMesh = io.getMesh();
     const ioGroup = new THREE.Group();
 
-    const europa = new Planet(10, 32, 16, '/resources/europa.jpg', 150, 'europa');
+    const europa = new Planet(10, 32, 16, 'resources/europa.jpg', 150, 'europa');
     const europaMesh = europa.getMesh();
     const europaGroup = new THREE.Group();
 
-    const ganymede = new Planet(10, 32, 16, '/resources/ganymede.jpg', 190, 'ganymede');
+    const ganymede = new Planet(10, 32, 16, 'resources/ganymede.jpg', 190, 'ganymede');
     const ganymedeMesh = ganymede.getMesh();
     const ganymedeGroup = new THREE.Group();
 
-    const callisto = new Planet(10, 32, 16, '/resources/callisto.jpg', 220, 'callisto');
+    const callisto = new Planet(10, 32, 16, 'resources/callisto.jpg', 220, 'callisto');
     const callistoMesh = callisto.getMesh();
     const callistoGroup = new THREE.Group();
 
-    const titan = new Planet(10, 32, 16, '/resources/titan.jpg', 190, 'titan');
+    const titan = new Planet(10, 32, 16, 'resources/titan.jpg', 190, 'titan');
     const titanMesh = titan.getMesh();
     const titanGroup = new THREE.Group();
    
