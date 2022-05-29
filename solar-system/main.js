@@ -327,7 +327,7 @@ function main() {
     const moonMesh = moon.getMesh();
     const moonGroup = new THREE.Group();
 
-    const io = new Planet(10, 32, 16, 'resources/io.webp', 120, 'io');
+    const io = new Planet(10, 32, 16, 'resources/Io.webp', 120, 'io');
     const ioMesh = io.getMesh();
     const ioGroup = new THREE.Group();
 
