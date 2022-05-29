@@ -1,9 +1,14 @@
-import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js';
-import Stats from 'https://unpkg.com/three@0.126.1/examples//jsm/libs/stats.module.js';
-import { FlyControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/FlyControls.js';
+//import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js';
+//import Stats from 'https://unpkg.com/three@0.126.1/examples//jsm/libs/stats.module.js';
+//import { FlyControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/FlyControls.js';
+
+import * as THREE from './node_modules/three/build/three.module.js';
+import Stats from './node_modules/three/examples/jsm/libs/stats.module.js';
+import {FlyControls} from './node_modules/three/examples/jsm/controls/FlyControls.js';
 
 import Planet from './planet.js'
 import OrbitLine from './orbitLine.js';
+
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1e7 );
